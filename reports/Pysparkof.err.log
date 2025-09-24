@@ -15,14 +15,6 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# ===================================
-# 1.1 CARGA DEL CSV (lectura segura)
-# ===================================
-# Notas:
-# - low_memory=False para parseo estable.
-# - No imponemos dtypes aún porque el CSV de Lending Club trae columnas inconsistentes según años.
-# - Convertiremos tipos clave luego para ahorrar memoria/control.
-
 assert os.path.exists(CSV_FILE), f"No se encontró el archivo: {CSV_FILE}"
 
 print("Cargando CSV (puede tardar un poco)...")
@@ -42,16 +34,10 @@ display(df.head(3))
 
 [1;31m---------------------------------------------------------------------------[0m
 [1;31mAssertionError[0m                            Traceback (most recent call last)
-Cell [1;32mIn[6], line 9[0m
-[0;32m      1[0m [38;5;66;03m# ===================================[39;00m
-[0;32m      2[0m [38;5;66;03m# 1.1 CARGA DEL CSV (lectura segura)[39;00m
-[0;32m      3[0m [38;5;66;03m# ===================================[39;00m
-[1;32m   (...)[0m
-[0;32m      6[0m [38;5;66;03m# - No imponemos dtypes aún porque el CSV de Lending Club trae columnas inconsistentes según años.[39;00m
-[0;32m      7[0m [38;5;66;03m# - Convertiremos tipos clave luego para ahorrar memoria/control.[39;00m
-[1;32m----> 9[0m [38;5;28;01massert[39;00m os[38;5;241m.[39mpath[38;5;241m.[39mexists(CSV_FILE), [38;5;124mf[39m[38;5;124m"[39m[38;5;124mNo se encontró el archivo: [39m[38;5;132;01m{[39;00mCSV_FILE[38;5;132;01m}[39;00m[38;5;124m"[39m
-[0;32m     11[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124mCargando CSV (puede tardar un poco)...[39m[38;5;124m"[39m)
-[0;32m     12[0m df [38;5;241m=[39m pd[38;5;241m.[39mread_csv(CSV_FILE, low_memory[38;5;241m=[39m[38;5;28;01mFalse[39;00m)
+Cell [1;32mIn[6], line 1[0m
+[1;32m----> 1[0m [38;5;28;01massert[39;00m os[38;5;241m.[39mpath[38;5;241m.[39mexists(CSV_FILE), [38;5;124mf[39m[38;5;124m"[39m[38;5;124mNo se encontró el archivo: [39m[38;5;132;01m{[39;00mCSV_FILE[38;5;132;01m}[39;00m[38;5;124m"[39m
+[0;32m      3[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124mCargando CSV (puede tardar un poco)...[39m[38;5;124m"[39m)
+[0;32m      4[0m df [38;5;241m=[39m pd[38;5;241m.[39mread_csv(CSV_FILE, low_memory[38;5;241m=[39m[38;5;28;01mFalse[39;00m)
 
 [1;31mAssertionError[0m: No se encontró el archivo: .\accepted_2007_to_2018Q4.csv
 
