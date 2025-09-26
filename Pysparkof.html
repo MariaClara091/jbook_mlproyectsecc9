@@ -57,6 +57,8 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Pysparkof';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -180,6 +182,7 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Proyecto Integrador de Aprendizaje Automático</a></li>
+
 </ul>
 
     </div>
@@ -352,7 +355,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -368,6 +373,16 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Proyecto Integrador de Aprendizaje Automático</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-proyecto">Conclusiones del Proyecto</a></li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -396,6 +411,7 @@ document.write(`
 <span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">random</span><span class="o">,</span><span class="w"> </span><span class="nn">warnings</span><span class="o">,</span><span class="w"> </span><span class="nn">sys</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;seaborn-v0_8&quot;</span><span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">)</span>
@@ -563,13 +579,7 @@ JSON guardado en: resultados\artifacts\versions.json
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">random</span><span class="o">,</span><span class="w"> </span><span class="nn">warnings</span><span class="o">,</span><span class="w"> </span><span class="nn">sys</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
-
-<span class="c1"># Semillas para reproducibilidad</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Semillas para reproducibilidad</span>
 <span class="n">GLOBAL_SEED</span> <span class="o">=</span> <span class="mi">42</span>
 <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">GLOBAL_SEED</span><span class="p">)</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">GLOBAL_SEED</span><span class="p">)</span>
@@ -718,10 +728,10 @@ Name: proportion, dtype: float64
 </table>
 </div></div></div>
 </div>
+<p>Teniendo ya los filtros y los almacenados en el orden y lugar correcto, empezamos con algunas normalizaciones básicas:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Normalizaciones básicas</span>
-<span class="k">for</span> <span class="n">pct_col</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;int_rate&quot;</span><span class="p">,</span> <span class="s2">&quot;revol_util&quot;</span><span class="p">]:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">pct_col</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;int_rate&quot;</span><span class="p">,</span> <span class="s2">&quot;revol_util&quot;</span><span class="p">]:</span>
     <span class="k">if</span> <span class="n">pct_col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
         <span class="n">df</span><span class="p">[</span><span class="n">pct_col</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">df</span><span class="p">[</span><span class="n">pct_col</span><span class="p">]</span>
@@ -812,10 +822,10 @@ dtype: object
 </div>
 </div>
 </div>
+<p>Aquí verificamos la naturaleza de cada variable. Al evaluar el contexto de interés del trabajo, siendo datos financieros, hacemos un filtro de acuerdo a nuestras variables de interés:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Varibles de interés</span>
-<span class="n">candidate_features</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">candidate_features</span> <span class="o">=</span> <span class="p">[</span>
     <span class="c1"># Monto y términos del préstamo</span>
     <span class="s2">&quot;loan_amnt&quot;</span><span class="p">,</span> <span class="s2">&quot;term&quot;</span><span class="p">,</span> <span class="s2">&quot;int_rate&quot;</span><span class="p">,</span> <span class="s2">&quot;installment&quot;</span><span class="p">,</span>
     <span class="c1"># Calificación crediticia y FICO al orig.</span>
@@ -972,6 +982,7 @@ dtype: object
 </div>
 </div>
 </div>
+<p>Con esto, guardamos las variables de interés usando un Parquet para hacerlo ligero y funcional, pasando a otro csv</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Guardamos a Parquet</span>
@@ -1004,10 +1015,10 @@ Guardado (CSV muestra): resultados\lendingclub_filtered.csv
 </div>
 </div>
 </div>
+<p>Por lo cual nuestro dataset quedó así:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Resumen del dataset</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape actual:&quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape actual:&quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Memoria (aprox):&quot;</span><span class="p">,</span> <span class="n">mem_mb</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Primeras filas ---&quot;</span><span class="p">)</span>
@@ -1557,6 +1568,9 @@ Name: count, dtype: int64
 </div>
 </div>
 </div>
+<p>Luego de estas mejoras vemos que el dataset al final tiene comprende 1.345.310 filas y 26 variables. Al ver que el default con un 19.96% refleja como un desbalanceo, es decir, problemas crediticios en los usuarios.</p>
+<p>En las variables numéricas muestran préstamos promedio de <span class="math notranslate nohighlight">\(14.420 a 36 meses con una tasa de interés del 13.24% aprox., mientras el perfil del solicitante presenta score promedio de entre 696-700, con ingresos anuales de \)</span>76.248 y endeudamiento de un 18.28%.</p>
+<p>En las variables categóricas muestran más datos en grados B y C  con un 57.6% combinado con los dos, que pueden ser deudas (58%), y distribución equilibrada en la verificación de ingresos.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Distribución del target</span>
@@ -1581,7 +1595,9 @@ Name: count, dtype: int64
 </div>
 </div>
 </div>
-<p>Revisamos los faltantes del dataset</p>
+<p>Con la visualización de la distribución de la variable vemos un total de 1.345.310 préstamos, donde 1.076.751 son préstamos ya pagados, siendo un 80.0% aprox., y 268.559 presentan default, siendo un 20.0% de la gente prestante.
+Esto muestra un desbalanceo de problemas de riesgo crediticio, mostrando que aproximadamente 1 de cada 5 préstamos quedan debiendo. Así con este desbalanceo podemos usar los modelos predictivos para dar respuesta a este fenómeno.</p>
+<p>Como siguiente paso, revisamos los faltantes del dataset</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">na_tbl</span> <span class="o">=</span> <span class="p">(</span>
@@ -1757,7 +1773,9 @@ dtype: int64
 </div>
 </div>
 </div>
-<p>Visualizamos las variables numéricas:</p>
+<p>Viendo el top 20 de porcentajes de NA’s hay tres variables que presentan valores faltantes significativos. La experiencia laboral con un 5.84% de faltantes, revol_util con un 0.06% y dti con un 0.03%, presentando porcentajes mínimos.</p>
+<p>Respecto a la cardinalidad, las variables numéricas como revol_bal, installment y annual_inc tienen alta diversidad de valores, mientras las categóricas como purpose con 14 categorías y grade con 7 categorías, y no presentar problemas de alta dimensionalidad para los modelos.</p>
+<p>Con ello, visualizamos las variables numéricas:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_numeric_dtype</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">c</span><span class="p">])</span> <span class="ow">and</span> <span class="n">c</span> <span class="o">!=</span> <span class="s2">&quot;default&quot;</span><span class="p">]</span>
@@ -1776,7 +1794,9 @@ dtype: int64
 <img alt="_images/51716f1bd1077fdb1e6f10c7a7e110f72df7dfdd27cfdb31b60c41f5933f8408.png" src="_images/51716f1bd1077fdb1e6f10c7a7e110f72df7dfdd27cfdb31b60c41f5933f8408.png" />
 </div>
 </div>
-<p>Vemos los boxplots de las variables numericas claves para el estudio</p>
+<p>Mediantes los histogramas vemos que, en el monto del préstamo tiene un tipo de distribución multimodal con picos en valores de <span class="math notranslate nohighlight">\(10,000 y \)</span>20,000, siendo las preferencias de los solicitantes. El score fico_range_low/high presenta una distribución aprox. normal con centro en 700. El ingreso anual evidencia una asimetría positiva con la mayoría de valores bajo $100,000 pero con una cola hacia ingresos altos.</p>
+<p>En variables como delinq_2yrs y pub_rec tienen distribuciones sesgadas en ceros, siendo asi que en la mayoría de solicitantes tienen historiales crediticios limpios. Y en revol_util muestra valores extremos bajos y altos, lo que podrían ser perfiles diferentes de la gente cuando solicitan un crédito.</p>
+<p>Ahora, vemos los boxplots de las variables numericas claves para el estudio</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">box_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;loan_amnt&quot;</span><span class="p">,</span> <span class="s2">&quot;int_rate&quot;</span><span class="p">,</span> <span class="s2">&quot;annual_inc&quot;</span><span class="p">,</span> <span class="s2">&quot;dti&quot;</span><span class="p">,</span> <span class="s2">&quot;fico_range_high&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">num_cols</span><span class="p">]</span>
@@ -1786,7 +1806,7 @@ dtype: int64
     <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">showfliers</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Boxplot de </span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2"> por clase &#39;default&#39;&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="s1">&#39;show()</span>
 </pre></div>
 </div>
 </div>
@@ -1798,7 +1818,13 @@ dtype: int64
 <img alt="_images/8d7aea15444021a5ab45da9838ed5df6d9a05150c87ee2e4338e79622fa6b9b5.png" src="_images/8d7aea15444021a5ab45da9838ed5df6d9a05150c87ee2e4338e79622fa6b9b5.png" />
 </div>
 </div>
-<p>Vemos entre cuales variables existen correlaciones:</p>
+<p>Los boxplots muestran diferencias significativas entre préstamos que entran en default vs aquellos que se pagan completamente.</p>
+<p>Los montos de préstamo son más altos para la clase default, por lo que los préstamos de mayor valor presentan mayor riesgo.</p>
+<p>La tasa de interés muestra divergencia con medianas más elevadas para default, mostrando que los préstamos riesgosos tienen tasas más altas.</p>
+<p>El ingreso anual presenta una mediana ligeramente inferior en la clase default, así que solicitantes con menores ingresos tienen mayor probabilidad de incumplimiento.</p>
+<p>El ratio de endeudamiento es más alto en préstamos problemáticos, confirmando que el sobreendeudamiento correlaciona con default.</p>
+<p>Y el score FICO exhibe una diferencia con puntajes más bajos para default, por lo que el historial crediticio es un predictor tiene un fuerte riesgo.</p>
+<p>Por ello, vemos entre cuales variables existen correlaciones:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># &#39;default&#39; sea numérica (0 o 1)</span>
@@ -1853,6 +1879,11 @@ dtype: float64
 </div>
 </div>
 </div>
+<p>Haciendo un análisis de correlaciones vemos patrones con el riesgo crediticio pues la tasa de interés muestra una correlación positiva fuerte, con 0.259, confirmando así que préstamos con mayor riesgo reciben tasas más altas. E</p>
+<p>En el plazo del préstamo presenta alta correlación positiva con 0.176, indicando que plazos más largos asociados a mayor riesgo.</p>
+<p>En variables como dti, con 0.085, y loan_amnt, con 0.066, se correlacionan con default, reflejando que un mayor endeudamiento y montos elevados incrementan el riesgo.</p>
+<p>Entre las correlaciones negativas estan la de fico_range_high/low con un -0.131, confirmando que mejores scores FICO reducen probabilidad de default, mientras que en annual_inc con -0.042 muestra que mayores ingresos disminuyen riesgo.</p>
+<p>La mayoría de correlaciones son bajas, indicando que ninguna variable por sí sola explica el default.</p>
 <p>Aplicamos un Target Leakage scan para algunas variables categóricas en este estudio:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1892,8 +1923,10 @@ dtype: float64
 </div>
 </div>
 </div>
-<p>Ya revisado todo esto</p>
-<p>Ahora iniciamos con las pruebas para el uso de técnicas propuestas para este proyecto</p>
+<p>Ya revisado todo esto vemos la ganancia de información de cada variable categórica respecto al default. Sub_grade con 0.0368 y grade con 0.0348 son por mucho las variables más informativas en el proyecto, confirmando que la calificación crediticia asignada por Lending Club es el predictor categórico más poderoso para el default.</p>
+<p>Las demás variables presentan valores muy bajos de ganancia de información son verification_status, home_ownership, purpose y addr_state. Y variables como application_type y initial_list_status son prácticamente irrelevantes con valores cercanos a cero.</p>
+<p>Esto indica que, aunque las variables categóricas deben incluirse en el modelo, sub_grade y grade dominan la predictividad frente a las demás categorías.</p>
+<p>Ahora iniciamos con las pruebas para el uso de técnicas propuestas para este proyecto:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># SPLIT TRAIN/TEST</span>
@@ -2282,7 +2315,10 @@ Pred Time (s): 1.5896
 <img alt="_images/ebff046cfdd0cd25d05e550e9471e9dd33d4ae9c6dd3d5c6a069cf1aa5cd5613.png" src="_images/ebff046cfdd0cd25d05e550e9471e9dd33d4ae9c6dd3d5c6a069cf1aa5cd5613.png" />
 </div>
 </div>
-<p>Buscamos y visualizamos las variables más importantes:</p>
+<p>Mediante estas visualizaciones vemos que el modelo Random Forest muestra un desempeño predictivo moderado con un AUC de 0.708 en la curva ROC, indicando una capacidad aceptable para discriminar préstamos que entrarán en default y aquellos que se pagarán completamente.</p>
+<p>La matriz de confusión muestra un patrón conservador donde el modelo identifica correctamente 129,216 préstamos buenos y 37,529 casos de default, pero tiene un alto volumen de 86,134 falsos positivos, siendo préstamos seguros clasificados como riesgosos, y 16,183 falsos negativos, es decir, defaults no detectados.</p>
+<p>Esta tendencia refleja una estrategia crediticia de rechazar clientes potencialmente y el costo financiero de omitir un default suele ser mayor que el de rechazar un buen préstamo.</p>
+<p>Ahora buscamos y visualizamos las variables más importantes:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
@@ -2308,7 +2344,10 @@ Pred Time (s): 1.5896
 </div>
 </div>
 </div>
-<p>Usando técnicas de Java</p>
+<p>Aquí vemos un análisis de importancia de variables revela que int_rate es el predictor más influyente, confirmando que la tasa de interés asignada sintetiza el riesgo percibido por la entidad crediticia.</p>
+<p>Luego las variables categóricas grade_A, grade_B, grade_E y grade_D muestran la calificación crediticia oficial es fundamental en la predicción de default. El plazo del préstamo y los scores FICO ocupan posiciones centrales, validando que características estructurales del préstamo e historial crediticio son determinantes.</p>
+<p>Y variables tradicionales como dti, loan_amnt y annual_inc aparecen con importancia moderada, mientras aspectos como verification_status y home_ownership tienen influencia marginal.</p>
+<p>Ahora, usando técnicas de Java empezamos con la construcción de los modelos:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">JDK_HOME</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Program Files\Java\jdk-21&quot;</span>
@@ -2748,6 +2787,9 @@ Tiempo total entrenamiento (CV subset + refit full): 2472.37s
 <img alt="_images/46eabb0df75fac824bf907e9727e29da40a0628aeb7b11e40bb9d44c3ddf45df.png" src="_images/46eabb0df75fac824bf907e9727e29da40a0628aeb7b11e40bb9d44c3ddf45df.png" />
 </div>
 </div>
+<p>Mediante esta visualización de la curva ROC vemos que el modelo Random Forest implementado en PySpark alcanza un AUC de 0.714 en la curva ROC, mostrando un desempeño ligeramente superior al modelo de scikit-learn que tiene un AUC de 0.708.</p>
+<p>Esta diferencia de 0.006 puntos muestra que ambas implementaciones son equivalentes al predecir, con una ventaja mínima para la versión de PySpark que podría atribuirse a diferencias en el manejo de parámetros por defecto.</p>
+<p>El AUC de 0.714 mantiene la clasificación de poder, confirmando que el modelo discrimina entre préstamos riesgosos y seguros.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_safe_stop_spark</span><span class="p">(</span><span class="n">_spark</span><span class="p">):</span>
@@ -3085,6 +3127,18 @@ Tiempo total entrenamiento (CV subset + refit full): 2472.37s
 </div>
 </div>
 </div>
+<p>Mediante las últimas pruebas vemo que el modelo PySpark muestra mejor desempeño general con accuracy del 64.38% frente al 61.97% de scikit-learn.</p>
+<p>La diferencia está en precisión, con 77.28% vs 30.35%, indicando que PySpark es mejor para evitar falsos positivos. Pero scikit-learn tiene mayor recall, con 69.87% vs 64.38%, detectando más casos de default reales. El F1-score de PySpark, siendo 67.89%, es muy superior al de scikit-learn de 42.32%, reflejando un mejor balance entre precisión y recall. El AUC es similar en ambos siendo 0.708 vs 0.713 confirma la capacidad discriminativa comparable.</p>
+<p>Por lo cual PySpark requiere 5 veces más tiempo de entrenamiento pero es 4 veces más rápido en predicción, lo cual es una ventaja para aplicaciones en tiempo real y mayor inversión inicial en entrenamiento versus mejor eficiencia operacional.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="conclusiones-del-proyecto">
+<h1>Conclusiones del Proyecto<a class="headerlink" href="#conclusiones-del-proyecto" title="Link to this heading">#</a></h1>
+<p>En este trabajo desarrollamo un sistema de clasificación para predecir el riesgo de default en préstamos de Lending Club, utilizando un dataset de aprox. 1.3 millones de registros con 26 variables financieras y crediticias.</p>
+<p>El objetivo principal fue comparar el desempeño de Random Forest implementado en scikit-learn versus PySpark, además de aplicar técnicas de interpretabilidad con LIME. La variable target se construyó transformando loan_status en un indicador binario donde el 20% de los préstamos representaban casos de default, mostrando un desbalanceo natural característico de problemas crediticios.</p>
+<p>En el EDA reveló una excelente calidad de datos con mínimos valores faltantes, donde variables como tasa de interés, calificación crediticia y score FICO mostraron las correlaciones más fuertes con el default. Los histogramas y boxplots confirmaron patrones esperados: préstamos más grandes, mayores tasas de interés y puntajes FICO más bajos se asociaban consistentemente con mayor probabilidad de incumplimiento. Las variables categóricas como grade y sub_grade demostraron ser las más informativas, mientras características demográficas como estado de residencia mostraron influencia marginal.</p>
+<p>En el modelado, ambos algoritmos alcanzaron un poder predictivo moderado con AUC alrededor de 0.71, pero con diferencias significativas en el balance entre métricas. PySpark obtuvo mejor precisión, siendo 77.28% vs 30.35%, y F1-score siendo 67.89% vs 42.32%, indicando una clasificación equilibrada, mientras scikit-learn destacó en recall siendo 69.87% vs 64.38%, detectando más casos reales de default. Y la comparación de tiempos mostró que PySpark fue 5 veces más lento en entrenamiento pero 4 veces más rápido en predicción.</p>
+<p>El análisis de importancia de variables confirmó que la tasa de interés, la calificación crediticia y el score FICO fueron los predictores más influyentes con las prácticas bancarias. Las explicaciones de LIME permitieron interpretar predicciones individuales, identificando cómo combinaciones específicas de variables afectaban el riesgo percibido.</p>
+<p>Por lo cual demostró que PySpark es el más adecuado para entornos productivos que requieren predicciones rápidas, y scikit-learn para desarrollo iterativo. Los resultados proporcionan una base sólida para mejorar con técnicas más avanzadas de feature engineering y algoritmos alternativos.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -3132,6 +3186,23 @@ Tiempo total entrenamiento (CV subset + refit full): 2472.37s
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Proyecto Integrador de Aprendizaje Automático</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-proyecto">Conclusiones del Proyecto</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>
